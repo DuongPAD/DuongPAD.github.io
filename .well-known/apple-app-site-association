@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["8R8J2LLVF4.io.github.duongpad.caro-gomoku"],
+        "components": [
+          { "/": "/caro/join", "comment": "Caro room invites" },
+          { "/": "/caro/join/*", "comment": "Caro room invites" }
+        ]
+      }
+    ]
+  }
+}

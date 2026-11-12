@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Caro - Gomoku – Join a room</title>
+<style>
+  :root { --bg: #0a0620; --panel: #17113d; --fg: #f2f2f7; --muted: #a1a1a6; --accent: #ff3fa4; --cyan: #2fe6ff; }
+  body { margin: 0; background: var(--bg); color: var(--fg);
+         font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 520px; margin: 0 auto; padding: 48px 16px 64px; text-align: center; }
+  h1 { font-size: 1.6em; margin: 0 0 8px; }
+  .code { font: 700 2.6em/1.2 ui-monospace, Menlo, monospace; letter-spacing: 0.12em; color: var(--cyan);
+          background: var(--panel); border-radius: 16px; padding: 16px; margin: 24px 0; }
+  .button { display: block; background: var(--accent); color: #fff; text-decoration: none; font-weight: 700;
+            padding: 14px; border-radius: 14px; margin: 12px 0; }
+  .secondary { background: var(--panel); color: var(--fg); }
+  p { color: var(--muted); }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Caro - Gomoku</h1>
+  <p id="intro">Bạn được mời vào phòng · You're invited to a room</p>
+  <div class="code" id="code">——————</div>
+  <p id="password" class="hidden">Phòng có mật khẩu · The room has a password</p>
+  <a class="button" id="open" href="#">Mở trong Caro · Open in Caro</a>
+  <a class="button secondary" href="https://testflight.apple.com/join/CW5X2hEm">Tải Caro (TestFlight) · Get Caro (TestFlight)</a>
+  <p>Đã cài Caro mà link không tự mở? Vào <b>Online ▸ Vào phòng</b> và gõ mã ở trên.<br>
+     Caro already installed and the link didn't open it? Choose <b>Online ▸ Join</b> and type the code above.</p>
+</main>
+<script>
+  // The app opens this link itself when installed (a universal link); this page is the fallback.
+  const query = new URLSearchParams(location.search);
+  const code = (query.get("code") || "").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 6);
+  if (code.length === 6) {
+    document.getElementById("code").textContent = code.slice(0, 3) + " " + code.slice(3);
+    const app = new URLSearchParams({ code });
+    if (query.get("p")) { app.set("p", query.get("p")); document.getElementById("password").classList.remove("hidden"); }
+    document.getElementById("open").href = "caroapp://join?" + app.toString();
+  } else {
+    document.getElementById("intro").textContent = "Liên kết mời không hợp lệ · This invite link isn't valid";
+    document.getElementById("open").classList.add("hidden");
+  }
+</script>
+</body>
+</html>
